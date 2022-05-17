@@ -136,8 +136,12 @@ sonya.rate_lecturer(olya, 'Python', 4)
 sonya.rate_lecturer(olya, 'Git', 8)
 
 bob = Reviewer('Bob', 'Bobson')
-bob.rate_hw(andrew, 'Python', 8)
+bob.rate_hw(andrew, 'Python', 3)
+bob.rate_hw(andrew, 'Python', 3)
+bob.rate_hw(andrew, 'Python', 4)
+bob.rate_hw(sonya, 'Python', 3)
 bob.rate_hw(sonya, 'Python', 7)
+bob.rate_hw(sonya, 'Python', 3)
 print(bob)
 print('____________________________________________________________________________')
 
@@ -171,7 +175,45 @@ print('_________________________________________________________________________
 print(sonya > andrew)
 print('____________________________________________________________________________')
 
+print(andrew.grades)
 
-#Что-то я запутался в 4 задании с созданием функций,там должно быть цикл for, потом if, потом опять for?
+student_list = [andrew, sonya]
+student_average = {}
+lecturer_list = [vanya, olya]
+lecturer_average = {}
 
 
+def average_student(student_list, courses):
+    for stud in student_list:
+        for courses_, score in stud.grades.items():
+            sum_ = 0
+            if courses_ == courses:
+                for k in score:
+                    sum_ += k
+                else:
+                    average = round(sum_ / len(score), 2)
+                    student_average[courses] = [average]
+                    print(f'{stud.name} {stud.surname} средний балл по {courses} = {average}')
+    else:
+        return ''
+
+
+print(average_student(student_list, 'Python'))
+
+
+def average_lecturer(lecturer_list, courses):
+    for lect in lecturer_list:
+        for courses_, score in lect.grades.items():
+            sum_ = 0
+            if courses_ == courses:
+                for k in score:
+                    sum_ += k
+                else:
+                    average = round(sum_ / len(score), 2)
+                    lecturer_average[courses] = [average]
+                    print(f'{lect.name} {lect.surname} средний балл по {courses} = {average}')
+    else:
+        return ''
+
+
+print(average_lecturer(lecturer_list, 'Python'))
