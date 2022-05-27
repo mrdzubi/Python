@@ -1,16 +1,27 @@
-# This is a sample Python script.
+def make_cookbook():
+    with open('recipes.txt', encoding='utf-8') as file:
+        cook_book = {}
+        for block in file.read().split('\n\n'):
+            name, _, *ingredient = block.split('\n')
+            structure = []
+            for ing in ingredient:
+                ingredient_name, quantity, measure = map(lambda x: int(x) if x.isdigit() else x, ing.split(' | '))
+                structure.append({'ingredient_name': ingredient_name, 'quantity': quantity, 'measure': measure})
+            cook_book[name] = structure
+    return cook_book
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+
+def get_shop_list_by_dishes(dishes, person_count):
+    ingredient_dict = {}
+    for dish in dishes:
+        for ingredient in make_cookbook()[dish]:
+            ingredient['quantity'] *= person_count
+            if ingredient['ingredient_name'] not in ingredient_dict:
+                ingredient_dict[ingredient['ingredient_name']] = ingredient
+                del ingredient['ingredient_name']
+            else:
+                ingredient_dict[ingredient['ingredient_name']]['quantity'] += ingredient['quantity']
+    return ingredient_dict
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
 
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
